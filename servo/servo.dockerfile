@@ -4,9 +4,9 @@ MAINTAINER Jan Keromnes "janx@linux.com"
 # Install Servo build dependencies.
 # Packages are from https://github.com/servo/servo/blob/master/README.md#prerequisites
 # and https://github.com/servo/servo/issues/7512#issuecomment-216665988
-RUN apt-get update -q \
- && apt-get upgrade -qy \
- && DEBIAN_FRONTEND=noninteractive apt-get install -qy \
+RUN sudo apt-get update -q \
+ && sudo apt-get upgrade -qy \
+ && DEBIAN_FRONTEND=noninteractive sudo apt-get install -qy \
   freeglut3-dev \
   autoconf \
   libfreetype6-dev \
@@ -36,10 +36,6 @@ ENV CXX g++
 # Enable required Xvfb extensions for Servo.
 # Source: https://github.com/servo/servo/issues/7512#issuecomment-216665988
 RUN sed -i "s/\(Xvfb :.*\)$/\1 +extension RANDR +extension RENDER +extension GLX/" /etc/supervisord.conf
-
-# Don't be root.
-USER user
-WORKDIR /home/user
 
 # Download Servo's source code.
 RUN git clone https://github.com/servo/servo
